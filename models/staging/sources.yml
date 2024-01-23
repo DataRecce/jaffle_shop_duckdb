@@ -1,0 +1,12 @@
+sources:
+  - name: jaffle-shop-data
+    tables:
+      - name: raw_customers
+        meta:
+          external_location: "read_csv('jaffle-shop-data/raw_customers.csv', header = true, auto_detect = true)"
+      - name: raw_orders
+        meta:
+          external_location: "read_csv('jaffle-shop-data/raw_orders.csv', header = true, auto_detect = true)"
+      - name: raw_payments
+        meta:
+          external_location: "read_csv('jaffle-shop-data/raw_payments.csv', header = true, auto_detect = true)"
