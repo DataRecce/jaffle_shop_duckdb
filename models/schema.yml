@@ -29,6 +29,56 @@ models:
       - name: total_order_amount
         description: Total value (AUD) of a customer's orders
 
+  - name: customer_segments
+    description: This table categorizes customers based on their ordering behavior and value to the company, using derived metrics from their order history.
+
+    columns:
+      - name: customer_id
+        description: This is a unique identifier for a customer.
+        tests:
+          - unique
+          - not_null
+    
+      - name: number_of_orders
+        description: Count of the number of orders a customer has placed.
+    
+      - name: customer_lifetime_value
+        description: Total value (in currency) of all orders placed by a customer over their lifetime.
+    
+      - name: order_frequency_segment
+        description: Categorization of customers based on how frequently they place orders.
+    
+      - name: value_segment
+        description: Categorization of customers based on the monetary value they bring to the company.
+        tests:
+          - accepted_values:
+              values:  ['High Value', 'Medium Value', 'Low Value']
+
+  - name: customer_order_pattern
+    description: This table provides detailed insights into the ordering patterns of customers, including the frequency and recency of their orders.
+    
+    columns:
+      - name: customer_id
+        description: This is a unique identifier for a customer.
+        tests:
+          - unique
+          - not_null
+    
+      - name: first_order
+        description: Date (UTC) of a customer's first order.
+    
+      - name: most_recent_order
+        description: Date (UTC) of a customer's most recent order.
+    
+      - name: number_of_orders
+        description: Count of the number of orders a customer has placed.
+    
+      - name: days_active
+        description: The total number of days between a customer's first and most recent orders.
+    
+      - name: avg_days_between_orders
+        description: Average number of days between consecutive orders for a customer.
+
   - name: orders
     description: This table has basic information about orders, as well as some derived facts based on payments
 
