@@ -9,8 +9,8 @@ SELECT
         ELSE 'Rare Buyer'
     END AS order_frequency_segment,
     CASE 
-        WHEN customer_lifetime_value > 10 THEN 'High Value'
-        WHEN customer_lifetime_value BETWEEN 50 AND 10 THEN 'Medium Value'
+        WHEN customer_lifetime_value > 4000 THEN 'High Value'
+        WHEN customer_lifetime_value BETWEEN 1500 AND 4000 THEN 'Medium Value'
         ELSE 'Low Value'
     END AS value_segment
 FROM {{ ref('customers') }}
