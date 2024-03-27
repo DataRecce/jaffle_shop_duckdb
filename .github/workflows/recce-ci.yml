@@ -1,0 +1,47 @@
+name: Jaffle Shop Recce CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-pull-request:
+    name: Check pull request by Recce CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.x"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Install Recce - Nightly
+        run: |
+          pip install recce-nightly
+      - name: Prepare dbt Base environment
+        run: |
+          git checkout ${{ github.event.pull_request.base.sha }}
+          dbt deps
+          dbt seed --target prod --target-path target-base
+          dbt run --target prod --target-path target-base
+          dbt docs generate --target prod --target-path target-base
+      - name: Prepare dbt Current environment
+        run: |
+          git checkout ${{ github.event.pull_request.head.sha }}
+          dbt deps
+          dbt seed
+          dbt run
+          dbt docs generate
+      - name: Run Recce CI
+        run: |
+          recce run --github-pull-request-url ${{ github.event.pull_request.html_url }}
+      - name: Archive Recce State File
+        uses: actions/upload-artifact@v4
+        with:
+          name: recce-state-file
+          path: recce_state.json
