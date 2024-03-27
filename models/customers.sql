@@ -26,6 +26,7 @@ customer_orders as (
         count(order_id) as number_of_orders
     from orders
 
+    where orders.status = 'completed'
     group by customer_id
 
 ),
