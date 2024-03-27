@@ -40,3 +40,8 @@ jobs:
       - name: Run Recce CI
         run: |
           recce run --github-pull-request-url ${{ github.event.pull_request.html_url }}
+      - name: Archive Recce State File
+        uses: actions/upload-artifact@v4
+        with:
+          name: recce-state-file
+          path: recce-state.json
