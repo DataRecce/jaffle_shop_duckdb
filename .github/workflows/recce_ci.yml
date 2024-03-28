@@ -60,6 +60,16 @@ jobs:
 
       - name: Archive Recce State File
         uses: actions/upload-artifact@v4
+        id: recce-artifact-uploader
         with:
           name: recce-state-file
           path: recce_state.json
+
+      - name: Comment on pull request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Recce `run` completed successfully. The state file is ready.
+            Please download the [artifact](${{ env.ARTIFACT_URL }}) for the state file.
+        env:
+          ARTIFACT_URL: ${{ steps.recce-artifact-uploader.outputs.artifact-url }}
