@@ -25,9 +25,11 @@ jobs:
       - name: Run DBT
         run: |
           dbt deps
-          dbt seed --target prod --target-path target-base
-          dbt run --target prod --target-path target-base
-          dbt docs generate --target prod --target-path target-base
+          dbt seed --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+          dbt run --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+          dbt docs generate --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+        env:
+          DBT_BASE_TARGET: "motherDuckProd"
 
       - name: Package DBT artifacts
         run: |

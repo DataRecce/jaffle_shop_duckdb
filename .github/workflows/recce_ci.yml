@@ -32,25 +32,31 @@ jobs:
             echo "Base environment not found in S3. Running dbt to create base environment"
             git checkout ${{ github.event.pull_request.base.sha }}
             dbt deps
-            dbt seed --target prod --target-path target-base
-            dbt run --target prod --target-path target-base
-            dbt docs generate --target prod --target-path target-base  
+            dbt seed --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+            dbt run --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+            dbt docs generate --target ${{ env.DBT_BASE_TARGET }} --target-path target-base  
           fi
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          DBT_BASE_TARGET: "motherDuckProd"
+
       - name: Prepare dbt Current environment
         run: |
           git checkout ${{ github.event.pull_request.head.sha }}
           dbt deps
-          dbt seed
-          dbt run
-          dbt docs generate
+          dbt seed --target ${{ env.DBT_CURRENT_TARGET}}
+          dbt run --target ${{ env.DBT_CURRENT_TARGET}}
+          dbt docs generate --target ${{ env.DBT_CURRENT_TARGET}}
+        env:
+          DBT_CURRENT_TARGET: "motherDuck"
+
       - name: Run Recce CI
         run: |
           recce run --github-pull-request-url ${{ github.event.pull_request.html_url }}
+
       - name: Archive Recce State File
         uses: actions/upload-artifact@v4
         with:
