@@ -25,11 +25,22 @@ jobs:
           pip install recce-nightly
       - name: Prepare dbt Base environment
         run: |
-          git checkout ${{ github.event.pull_request.base.sha }}
-          dbt deps
-          dbt seed --target prod --target-path target-base
-          dbt run --target prod --target-path target-base
-          dbt docs generate --target prod --target-path target-base
+          if aws s3 cp s3://$AWS_S3_BUCKET/${{ github.event.pull_request.base.sha }}.tar.gz .; then
+            echo "Base environment found in S3"
+            tar -xvf ${{ github.event.pull_request.base.sha }}.tar.gz
+          else
+            echo "Base environment not found in S3. Running dbt to create base environment"
+            git checkout ${{ github.event.pull_request.base.sha }}
+            dbt deps
+            dbt seed --target prod --target-path target-base
+            dbt run --target prod --target-path target-base
+            dbt docs generate --target prod --target-path target-base  
+          fi
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       - name: Prepare dbt Current environment
         run: |
           git checkout ${{ github.event.pull_request.head.sha }}
