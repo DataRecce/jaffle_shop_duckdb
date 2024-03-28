@@ -41,7 +41,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          DBT_BASE_TARGET: "motherDuckProd"
+          DBT_BASE_TARGET: "prod"
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }} # Set these in your repository secrets
 
       - name: Prepare dbt Current environment
@@ -52,14 +52,11 @@ jobs:
           dbt run --target ${{ env.DBT_CURRENT_TARGET}}
           dbt docs generate --target ${{ env.DBT_CURRENT_TARGET}}
         env:
-          DBT_CURRENT_TARGET: "motherDuck"
-          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }} # Set these in your repository secrets
+          DBT_CURRENT_TARGET: "dev"
 
       - name: Run Recce CI
         run: |
           recce run --github-pull-request-url ${{ github.event.pull_request.html_url }}
-        env:
-          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }} # Set these in your repository secrets
 
       - name: Archive Recce State File
         uses: actions/upload-artifact@v4
