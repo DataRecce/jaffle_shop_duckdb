@@ -34,7 +34,7 @@ jobs:
 
       - name: Package DBT artifacts
         run: |
-          tar -czvf dbt-artifacts.tar.gz target-base
+          tar -czvf dbt-artifacts.tar.gz target-base jaffle_shop.duckdb
           mv dbt-artifacts.tar.gz $GITHUB_WORKSPACE/${{ github.sha }}.tar.gz
 
       - name: Upload to S3
