@@ -28,14 +28,13 @@ jobs:
           dbt seed --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
           dbt run --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
           dbt docs generate --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
-          ls -la
         env:
           DBT_BASE_TARGET: "motherDuckProd"
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }} # Set these in your repository secrets
 
       - name: Package DBT artifacts
         run: |
-          tar -czvf dbt-artifacts.tar.gz target-base jaffle_shop.duckdb
+          tar -czvf dbt-artifacts.tar.gz target-base
           mv dbt-artifacts.tar.gz $GITHUB_WORKSPACE/${{ github.sha }}.tar.gz
 
       - name: Upload to S3
