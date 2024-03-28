@@ -28,6 +28,7 @@ jobs:
           dbt seed --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
           dbt run --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
           dbt docs generate --target ${{ env.DBT_BASE_TARGET }} --target-path target-base
+          ls -la
         env:
           DBT_BASE_TARGET: "motherDuckProd"
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }} # Set these in your repository secrets
