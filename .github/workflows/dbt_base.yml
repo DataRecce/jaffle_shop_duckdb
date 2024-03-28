@@ -40,4 +40,5 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Set these in your repository secrets
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Set these in your repository secrets
+          AWS_REGION: us-west-1 # Change this to your region
           AWS_S3_BUCKET: jaffle-shop-duckdb-artifacts # Change this to your S3 bucket name
