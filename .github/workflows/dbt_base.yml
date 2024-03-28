@@ -1,0 +1,43 @@
+name: DBT Base Environment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: DBT Runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.x"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run DBT
+        run: |
+          dbt deps
+          dbt seed --target prod --target-path target-base
+          dbt run --target prod --target-path target-base
+          dbt docs generate --target prod --target-path target-base
+
+      - name: Package DBT artifacts
+        run: |
+          tar -czvf dbt-artifacts.tar.gz target-base
+          mv dbt-artifacts.tar.gz $GITHUB_WORKSPACE/${{ github.sha }}.tar.gz
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp $GITHUB_WORKSPACE/${{ github.sha }}.tar.gz s3://${{ env.AWS_S3_BUCKET }}/${{ github.sha }}.tar.gz
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Set these in your repository secrets
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Set these in your repository secrets
+          AWS_S3_BUCKET: jaffle-shop-duckdb-artifacts # Change this to your S3 bucket name
