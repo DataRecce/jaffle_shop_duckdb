@@ -1,0 +1,7 @@
+packages:
+  - package: dbt-labs/audit_helper
+    version: 0.9.0
+  - package: data-mie/dbt_profiler
+    version: 0.8.1
+  - package: dbt-labs/dbt_project_evaluator
+    version: 0.9.0
