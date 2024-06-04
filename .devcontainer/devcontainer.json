@@ -1,0 +1,8 @@
+{
+    "name": "Recce Cloud",
+    "build":{
+      "dockerfile": "Dockerfile"
+    },
+    "forwardPorts": [ 8000],
+    "postStartCommand": "echo 'Starting Recce Codespaces Container...'; post_start_commands",
+  }
