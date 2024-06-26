@@ -14,13 +14,11 @@ checks:
     type: schema_diff
     params:
       node_id: model.jaffle_shop.orders
-  - name: Row count of customers and orders models
+  - name: Row count of customers, orders and modified+ models
     description: The row count of customers and order should not be changed
     type: row_count_diff
     params:
-      node_names:
-        - customers
-        - orders
+      select: customers orders state:modified+
   - name: Value diff of customers
     description: The customer_lifetime_value in customers should be 100% matched
     type: value_diff
@@ -40,7 +38,7 @@ checks:
             AVG(customer_lifetime_value) AS avg_lifetime_value
         FROM
             {{ ref("customers") }}
-        WHERE first_order is not NULL    
+        WHERE first_order is not NULL
         GROUP BY
             first_order_week
         ORDER BY
