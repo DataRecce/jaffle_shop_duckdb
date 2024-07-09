@@ -459,4 +459,3 @@ For more information on dbt:
 - Join the [dbt Community](http://community.getdbt.com/)
 
 
-
