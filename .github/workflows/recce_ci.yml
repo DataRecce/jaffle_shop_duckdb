@@ -44,9 +44,9 @@ jobs:
 
       - name: Run Recce CI
         run: |
-          recce run --cloud --cloud-token ${{ secrets.RECCE_CLOUD_TOKEN }}
+          recce run --cloud
         env:
-          RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD}}
+          RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD }}
 
       - name: Upload DBT Artifacts
         uses: actions/upload-artifact@v4
@@ -65,7 +65,7 @@ jobs:
       - name: Prepare Recce Summary
         id: recce-summary
         run: |
-          recce summary --cloud --cloud-token ${{ secrets.RECCE_CLOUD_TOKEN }} > recce_summary.md
+          recce summary --cloud > recce_summary.md
           cat recce_summary.md >> $GITHUB_STEP_SUMMARY
           echo '${{ env.NEXT_STEP_MESSAGE }}' >> recce_summary.md
 
@@ -79,12 +79,12 @@ jobs:
 
         env:
           ARTIFACT_URL: ${{ steps.recce-artifact-uploader.outputs.artifact-url }}
-          RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD}}
+          RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD }}
           NEXT_STEP_MESSAGE: |
             ### How to check the recce result
             ```bash
             # Launch the recce server based on the state file
-            recce server --review --cloud --password ${{ vars.RECCE_STATE_PASSWORD}}
+            recce server --review --cloud --password ${{ vars.RECCE_STATE_PASSWORD }}
 
             # Open the recce server http://localhost:8000 by your browser
             ```
