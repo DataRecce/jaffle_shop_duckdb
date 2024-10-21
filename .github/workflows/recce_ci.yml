@@ -8,94 +8,13 @@ jobs:
   check-pull-request:
     name: Check pull request by Recce CI
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10.x"
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install recce-nightly
-
-      - name: Prepare dbt Base environment
-        run: |
-          gh repo set-default ${{ github.repository }}
-          base_branch=${{ github.base_ref }}
-          run_id=$(gh run list --workflow ${WORKFLOW_BASE} --branch ${base_branch} --status success --limit 1 --json databaseId --jq '.[0].databaseId')
-          echo "Download artifacts from run $run_id"
-          gh run download ${run_id} -n target -D target-base
-          gh run download ${run_id} -n duckdb
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_BASE: ".github/workflows/dbt_base.yml"
-
-      - name: Prepare dbt Current environment
-        run: |
-          git checkout ${{ github.event.pull_request.head.sha }}
-          dbt deps
-          dbt seed --target ${{ env.DBT_CURRENT_TARGET}}
-          dbt run --target ${{ env.DBT_CURRENT_TARGET}}
-          dbt docs generate --target ${{ env.DBT_CURRENT_TARGET}}
-        env:
-          DBT_CURRENT_TARGET: "dev"
-
+    steps:     
       - name: Run Recce CI
         run: |
-          recce run --cloud
+           echo "${GITHUB_TOKEN: -6}"
+           curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user
         env:
           GITHUB_TOKEN: ${{ secrets.RECCE_CLOUD_TOKEN }}
           RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD}}
 
-      - name: Upload DBT Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: target
-          path: target/
-
-      - name: Upload Recce State File
-        uses: actions/upload-artifact@v4
-        id: recce-artifact-uploader
-        with:
-          name: duckdb
-          path: |
-            jaffle_shop.duckdb
-
-      - name: Prepare Recce Summary
-        id: recce-summary
-        run: |
-          recce summary --cloud --cloud-token ${{ secrets.RECCE_CLOUD_TOKEN }} > recce_summary.md
-          cat recce_summary.md >> $GITHUB_STEP_SUMMARY
-          echo '${{ env.NEXT_STEP_MESSAGE }}' >> recce_summary.md
-
-          # Handle the case when the recce summary is too long to be displayed in the GitHub PR comment
-          if [[ `wc -c recce_summary.md | awk '{print $1}'` -ge '65535' ]]; then
-            echo '# Recce Summary
-          The recce summary is too long to be displayed in the GitHub PR comment.
-          Please check the summary detail in the [Job Summary](${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}) page.
-          ${{ env.NEXT_STEP_MESSAGE }}' > recce_summary.md
-          fi
-
-        env:
-          ARTIFACT_URL: ${{ steps.recce-artifact-uploader.outputs.artifact-url }}
-          RECCE_STATE_PASSWORD: ${{ vars.RECCE_STATE_PASSWORD}}
-          NEXT_STEP_MESSAGE: |
-            ### How to check the recce result
-            ```bash
-            # Launch the recce server based on the state file
-            recce server --review --cloud --password ${{ vars.RECCE_STATE_PASSWORD}}
-
-            # Open the recce server http://localhost:8000 by your browser
-            ```
-
-      - name: Comment on pull request
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          filePath: recce_summary.md
-          comment_tag: recce
+      
