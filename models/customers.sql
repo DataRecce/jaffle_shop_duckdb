@@ -34,7 +34,8 @@ customer_payments as (
 
     select
         orders.customer_id,
-        sum(amount)::bigint as total_amount
+        sum(amount)::bigint as total_amount,
+        bool_or(is_promotion) as has_promoted_orders
 
     from payments
 
@@ -54,7 +55,8 @@ final as (
         customer_orders.first_order,
         customer_orders.most_recent_order,
         customer_orders.number_of_orders,
-        customer_payments.total_amount as customer_lifetime_value
+        customer_payments.total_amount as customer_lifetime_value,
+        customer_payments.has_promoted_orders
 
     from customers
 
@@ -63,7 +65,7 @@ final as (
 
     left join customer_payments
         on  customers.customer_id = customer_payments.customer_id
-
+    where has_promoted_orders = true
 )
 
 select * from final
