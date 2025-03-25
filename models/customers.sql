@@ -65,7 +65,6 @@ final as (
 
     left join customer_payments
         on  customers.customer_id = customer_payments.customer_id
-    where has_promoted_orders = true
 )
 
 select * from final
