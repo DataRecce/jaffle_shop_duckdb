@@ -29,3 +29,11 @@ models:
         tests:
           - accepted_values:
               values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
+      - name: amount
+        description: Amount in dollars (converted from cents)
+        tests:
+          - not_null
+      - name: coupon_amount
+        description: Amount of the payment that was paid using a coupon (in dollars)
+        tests:
+          - not_null

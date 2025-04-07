@@ -1,18 +1,18 @@
 with customers as (
 
-    select * from {{ ref('stg_customers') }}
+    select * from "jaffle_shop"."prod"."stg_customers"
 
 ),
 
 orders as (
 
-    select * from {{ ref('stg_orders') }}
+    select * from "jaffle_shop"."prod"."stg_orders"
 
 ),
 
 payments as (
 
-    select * from {{ ref('stg_payments') }}
+    select * from "jaffle_shop"."prod"."stg_payments"
 
 ),
 
@@ -34,17 +34,12 @@ customer_payments as (
 
     select
         orders.customer_id,
-        sum(amount)::bigint as gross_amount, -- Includes coupon amount
-        sum(amount - coupon_amount)::bigint as profit_based_amount, -- Excludes coupon amount
+        sum(amount)::bigint as total_amount
 
     from payments
 
     left join orders on
          payments.order_id = orders.order_id
-        and orders.status = 'completed'
-
-    where payments.amount is not null -- Exclude incomplete payments
-        and payments.amount > 0 -- Exclude negative amounts
 
     group by orders.customer_id
 
@@ -59,8 +54,7 @@ final as (
         customer_orders.first_order,
         customer_orders.most_recent_order,
         customer_orders.number_of_orders,
-        customer_payments.gross_amount as customer_lifetime_value, -- Gross CLV
-        customer_payments.profit_based_amount as profit_based_customer_lifetime_value -- Profit-based CLV
+        customer_payments.total_amount as customer_lifetime_value
 
     from customers
 
