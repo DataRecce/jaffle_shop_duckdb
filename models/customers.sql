@@ -35,7 +35,7 @@ customer_payments as (
     select
         orders.customer_id,
         sum(amount)::bigint as gross_amount, -- Includes coupon amount
-        sum(amount - coupon_amount)::bigint as profit_based_amount, -- Excludes coupon amount
+        sum(amount - coupon_amount)::bigint as net_amount, -- Excludes coupon amount
 
     from payments
 
@@ -60,7 +60,7 @@ final as (
         customer_orders.most_recent_order,
         customer_orders.number_of_orders,
         customer_payments.gross_amount as customer_lifetime_value, -- Gross CLV
-        customer_payments.profit_based_amount as profit_based_customer_lifetime_value -- Profit-based CLV
+        customer_payments.net_amount as net_customer_lifetime_value -- Net CLV
 
     from customers
 

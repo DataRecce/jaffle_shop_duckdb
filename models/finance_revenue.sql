@@ -6,7 +6,7 @@ payments_revenue as (
     select
         order_id,
         sum(amount) as gross_revenue,
-        sum(amount - coupon_amount) as profit_based_revenue
+        sum(amount - coupon_amount) as net_revenue
     from payments
     group by order_id
 ),
@@ -22,7 +22,7 @@ final as (
         orders.order_date,
         orders.status,
         payments_revenue.gross_revenue,
-        payments_revenue.profit_based_revenue
+        payments_revenue.net_revenue
     from orders
     left join payments_revenue
         on orders.order_id = payments_revenue.order_id

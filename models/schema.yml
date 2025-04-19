@@ -29,7 +29,7 @@ models:
       - name: customer_lifetime_value
         description: Total value of a customer's orders including coupon amounts
 
-      - name: profit_based_customer_lifetime_value
+      - name: net_customer_lifetime_value
         description: Total value of a customer's orders excluding coupon amounts
 
       - name: total_order_amount
@@ -56,7 +56,7 @@ models:
       - name: customer_lifetime_value
         description: Total value of all orders including coupon amounts.
     
-      - name: profit_based_customer_lifetime_value
+      - name: net_customer_lifetime_value
         description: Total value of all orders excluding coupon amounts.
     
       - name: order_frequency_segment
@@ -72,7 +72,7 @@ models:
           - accepted_values:
               values: ['High Value', 'Medium Value', 'Low Value']
     
-      - name: profit_based_value_segment
+      - name: net_value_segment
         description: Categorization of customers based on the profit-based monetary value they bring to the company.
         tests:
           - accepted_values:
@@ -193,7 +193,7 @@ models:
         tests:
           - not_null
 
-      - name: profit_based_revenue
+      - name: net_revenue
         description: Total revenue excluding coupon amounts
         tests:
           - not_null
