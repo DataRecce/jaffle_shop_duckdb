@@ -1,0 +1,77 @@
+# Preset Checks
+# Please see https://docs.datarecce.io/features/preset-checks/
+checks:
+  - name: Limited breaking change
+    description: >-
+      Breaking change limited to customers.customer_lifetime_value and
+      ustomers.net_customer_lifetime_valuecolumns, so impacts to only
+      customer_segments.value_segment and customer_segments.net_value_segment. 
+
+
+      Expected result: Breaking changes should appear only on
+      `customers.customer_lifetime_value` and
+      `customers.net_customer_lifetime_value`, with downstream impact to
+      `customer_segments.value_segment` and
+      `customer_segments.net_value_segment`. This is because filtering to
+      "completed" orders changes the CLV calculation, which flows downstream to
+      segmentation. 
+
+
+      How to observe: look at the impact radius of the change, focusing on CLV
+      columns.
+    type: lineage_diff
+    params: {}
+    view_options:
+      view_mode: changed_models
+      packages:
+        - jaffle_shop
+  - name: change on customer_lifetime_value
+    description: >
+      There is a new definition of customer_lifetime_value. It only includes
+      "completed" orders now.
+
+
+      Expected result: CLV has only includes "completed" orders resolve the
+      previous issue that unfulfilled orders were being counted in CLV. 
+      This will result in lower lifetime values overall.
+
+
+      How to observe: Run a Query diff to see that number of orders, group by
+      "completed" ... [etc]
+    type: query_diff
+    params:
+      sql_template: select sum(amount) from {{ ref("stg_payments") }}
+  - name: "   - Diminished lifetime value"
+    description: >-
+      CLV now excludes non-completed orders and coupon amounts, resulting in
+      lower lifetime values overall.
+
+
+      - Observed result: High-value customers segment drops from 28.1% to 11.2%
+
+      - How to reproduce: Run Top-K Diff on `customer_segments.value_segment`
+    type: histogram_diff
+    params:
+      model: customers
+      column_name: customer_lifetime_value
+      column_type: HUGEINT
+  - name: "   - Average customer_lifetime_value drops"
+    description: >-
+      Average `customers.customer_lifetime_value`  drops from 2758.60 to
+      1871.77, decreases by ~32%
+
+          - Observed result: CLV decreases because the new calculation filters out non-completed orders (placed, shipped, return-pending), which were previously inflating the metric.
+
+          - How to reproduce: Run Profile Diff on `customers` model and compare the avg for `customer_lifetime_value`
+    type: profile_diff
+    params:
+      model: customers
+      columns:
+        - customer_lifetime_value
+  - name: "New Model: finance_revenue"
+    description:
+      There is a new model, finance_revenue, which computes both net and
+      gross revenue.
+    type: schema_diff
+    params:
+      node_id: model.jaffle_shop.orders
