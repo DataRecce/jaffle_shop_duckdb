@@ -1,0 +1,51 @@
+id,name,category_id,price,cost,created_at
+1,Espresso,4,756,194,2017-05-21
+2,Americano,4,1303,413,2017-02-22
+3,Latte,4,656,280,2017-01-17
+4,Cappuccino,4,422,117,2017-04-30
+5,Mocha,4,2369,1020,2017-10-15
+6,Cold Brew,4,1114,517,2017-12-26
+7,Macchiato,4,2018,637,2017-10-29
+8,Flat White,4,1439,709,2017-01-04
+9,Earl Grey,5,953,437,2017-06-24
+10,Green Tea,5,1438,426,2017-06-22
+11,Chai Latte,5,718,199,2017-02-19
+12,Chamomile,5,1770,892,2017-11-06
+13,Matcha Latte,5,1383,680,2017-08-24
+14,Oolong Tea,5,2496,717,2017-07-13
+15,Hibiscus Tea,5,622,258,2017-11-18
+16,Berry Blast Smoothie,6,1781,753,2017-12-27
+17,Tropical Smoothie,6,584,154,2017-04-27
+18,Green Power Smoothie,6,1485,810,2017-04-30
+19,Mango Smoothie,6,713,259,2017-08-21
+20,Banana Peanut Butter Smoothie,6,1794,536,2017-07-01
+21,Orange Juice,7,1158,522,2017-12-26
+22,Apple Juice,7,592,256,2017-03-29
+23,Carrot Ginger Juice,7,2487,1165,2017-03-25
+24,Lemonade,7,2193,797,2017-11-24
+25,Beet Juice,7,1199,546,2017-01-29
+26,Watermelon Agua Fresca,7,1238,614,2017-06-11
+27,Croissant,8,1943,641,2017-04-19
+28,Blueberry Muffin,8,1588,498,2017-09-13
+29,Chocolate Chip Cookie,8,1920,989,2017-11-26
+30,Cinnamon Roll,8,2179,638,2017-03-13
+31,Banana Bread,8,1310,620,2017-10-03
+32,Scone,8,1376,652,2017-08-08
+33,Turkey Club,9,1935,693,2017-03-12
+34,BLT,9,2387,950,2017-01-25
+35,Grilled Cheese,9,749,221,2017-03-23
+36,Veggie Wrap,9,2029,870,2017-07-17
+37,Chicken Pesto Panini,9,1863,798,2017-08-28
+38,Ham and Swiss,9,2467,802,2017-10-11
+39,Avocado Toast,10,347,157,2017-02-28
+40,Breakfast Burrito,10,2499,1187,2017-11-25
+41,Oatmeal Bowl,10,1693,479,2017-08-11
+42,Yogurt Parfait,10,947,365,2017-05-15
+43,Egg Sandwich,10,2350,1124,2017-09-17
+44,Pancake Stack,10,735,375,2017-06-02
+45,Coffee Mug,3,2379,1029,2017-03-20
+46,Tumbler,3,1831,876,2017-10-04
+47,Tote Bag,3,2472,1299,2017-11-03
+48,T-Shirt,3,1627,645,2017-02-27
+49,Hoodie,3,1786,917,2017-06-07
+50,Sticker Pack,3,1280,342,2017-10-18
