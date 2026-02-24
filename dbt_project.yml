@@ -19,7 +19,7 @@ clean-targets:
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
-seeds: 
+seeds:
   +docs:
     node_color: '#cd7f32'
 
@@ -30,5 +30,15 @@ models:
       +materialized: view
       +docs:
         node_color: 'silver'
-    +docs:
-      node_color: 'gold'
+    intermediate:
+      +materialized: view
+      +docs:
+        node_color: '#4169E1'
+    marts:
+      +materialized: table
+      +docs:
+        node_color: 'gold'
+    metrics:
+      +materialized: table
+      +docs:
+        node_color: '#9370DB'
