@@ -29,3 +29,62 @@ models:
         tests:
           - accepted_values:
               values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_categories
+    columns:
+      - name: category_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_items
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stores
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_employees
+    columns:
+      - name: employee_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_promotions
+    columns:
+      - name: promotion_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_promotions
+    description: Junction table linking orders to promotions
+
+  - name: stg_supply_orders
+    columns:
+      - name: supply_order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_reviews
+    columns:
+      - name: review_id
+        tests:
+          - unique
+          - not_null
