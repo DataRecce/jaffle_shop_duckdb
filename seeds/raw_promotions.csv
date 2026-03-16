@@ -1,0 +1,16 @@
+id,name,discount_type,discount_value,start_date,end_date
+1,New Year Special,percentage,10,2018-01-01,2018-01-09
+2,Valentine's Day,percentage,15,2018-01-25,2018-02-03
+3,Spring Fling,fixed,200,2018-02-18,2018-02-24
+4,March Madness,percentage,20,2018-03-14,2018-03-21
+5,Tax Day Relief,fixed,150,2018-04-07,2018-04-15
+6,Mother's Day,percentage,10,2018-05-01,2018-05-08
+7,Summer Kickoff,fixed,300,2018-05-25,2018-06-07
+8,Fourth of July,percentage,25,2018-06-18,2018-06-24
+9,Back to School,fixed,100,2018-07-12,2018-07-19
+10,Labor Day Sale,percentage,15,2018-08-05,2018-08-10
+11,Fall Harvest,fixed,250,2018-08-29,2018-09-09
+12,Halloween Treat,percentage,10,2018-09-22,2018-10-04
+13,Thanksgiving,fixed,200,2018-10-16,2018-10-30
+14,Holiday Season,percentage,20,2018-11-09,2018-11-21
+15,Year End Blowout,fixed,350,2018-12-03,2018-12-12

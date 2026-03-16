@@ -1,0 +1,11 @@
+id,name,parent_category_id
+1,Beverages,
+2,Food,
+3,Merchandise,
+4,Coffee,1
+5,Tea,1
+6,Smoothie,1
+7,Juice,1
+8,Pastry,2
+9,Sandwich,2
+10,Breakfast,2

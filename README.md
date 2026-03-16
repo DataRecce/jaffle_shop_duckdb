@@ -50,7 +50,7 @@ If you want an adrenaline rush from a process that used to take dbt newcomers `1
 [Verified GitHub Action on dbt Performance](https://github.com/dbt-labs/jaffle_shop_duckdb/runs/7141529753?check_suite_focus=true#step:4:306)
 
 ## Running this project
-Prerequisities: Python >= 3.5
+Prerequisities: Python >= 3.13
 
 ### Mach Speed: No explanation needed
 
@@ -430,6 +430,7 @@ To get up and running with this project:
 
 ## Browsing the data
 Some options:
+- [DuckDB UI](https://duckdb.org/docs/stable/extensions/ui.html)
 - [duckcli](https://pypi.org/project/duckcli/)
 - [DuckDB CLI](https://duckdb.org/docs/installation/?environment=cli)
 - [How to set up DBeaver SQL IDE for DuckDB](https://duckdb.org/docs/guides/sql_editors/dbeaver)

@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: metric_daily_revenue
+    description: Daily revenue metrics
+  - name: metric_daily_orders
+    description: Daily order count by status
+  - name: metric_weekly_sales
+    description: Weekly sales rollup
+  - name: metric_monthly_sales
+    description: Monthly sales rollup
+  - name: metric_customer_acquisition_monthly
+    description: Monthly new customer counts
+  - name: metric_customer_retention_monthly
+    description: Monthly cohort retention rates
+  - name: metric_product_sales_daily
+    description: Product-level daily sales
+  - name: metric_store_daily
+    description: Store-level daily metrics
+  - name: metric_promotion_daily
+    description: Promotion daily effectiveness
+  - name: metric_inventory_daily
+    description: Inventory snapshot metrics
+  - name: rpt_executive_dashboard
+    description: Executive-level KPI summary
+  - name: rpt_sales_dashboard
+    description: Sales-focused dashboard with WoW growth
+  - name: rpt_customer_dashboard
+    description: Customer-focused dashboard summary
+  - name: rpt_product_dashboard
+    description: Product-focused dashboard summary
+  - name: rpt_store_dashboard
+    description: Store-focused dashboard with rankings

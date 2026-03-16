@@ -1,4 +1,6 @@
-with source as (
+  {{ config(materialized='table') }}
+  
+  with source as (
     
     {#-
     Normally we would select from the table here, but we are using seeds to load
@@ -13,12 +15,13 @@ renamed as (
     select
         id as payment_id,
         order_id,
-        payment_method,
+        CAST(payment_method as varchar(74)) as payment_method, -- Cast to varchar to ensure consistent data type
 
         -- `amount` is currently stored in cents, so we convert it to dollars
-        amount / 100 as amount
+        amount / 100 as amount -- / 100 as amount
 
     from source
+    where amount > 0 -- We only want to include payments with a positive amount
 
 )
 

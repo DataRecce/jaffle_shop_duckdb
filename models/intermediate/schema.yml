@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: int_category_hierarchy
+    description: Recursive flattening of category parent-child tree
+    columns:
+      - name: category_id
+        tests:
+          - not_null
+
+  - name: int_products_with_categories
+    description: Products joined to their full category hierarchy
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_product_margins
+    description: Product-level margin calculations
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_order_items_with_products
+    description: Order line items enriched with product and category info
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_order_items_enriched
+    description: Order line items with margin data
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_order_totals
+    description: Order-level aggregations from line items
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_order_payments_matched
+    description: Payment-to-order matching with status flags
+
+  - name: int_orders_with_promotions
+    description: Orders joined to their promotion details
+
+  - name: int_order_enriched
+    description: Fully enriched orders with totals, promotions, and payment status
+
+  - name: int_daily_order_summary
+    description: Incremental daily order aggregation
+    columns:
+      - name: order_date
+        tests:
+          - unique
+          - not_null
+
+  - name: int_customer_order_history
+    description: Per-customer order statistics
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_customer_first_last_orders
+    description: First and last order dates per customer
+
+  - name: int_customer_payment_methods
+    description: Customer payment method preferences
+
+  - name: int_customer_review_activity
+    description: Customer review statistics
+
+  - name: int_customer_segments
+    description: RFM-based customer segmentation
+
+  - name: int_store_employees_active
+    description: Store-level employee counts by role
+
+  - name: int_store_order_assignments
+    description: Deterministic order-to-store mapping
+
+  - name: int_store_revenue
+    description: Store-level revenue aggregation
+
+  - name: int_store_performance
+    description: Store performance with efficiency metrics
+
+  - name: int_supply_order_costs
+    description: Supply orders with cost calculations
+
+  - name: int_inventory_movements
+    description: Combined supply and sales inventory movements
+
+  - name: int_product_stock_levels
+    description: Incremental product stock level calculation
+
+  - name: int_reviews_with_products
+    description: Reviews enriched with product info
+
+  - name: int_product_ratings
+    description: Product-level rating aggregation
+
+  - name: int_promotion_effectiveness
+    description: Promotion vs non-promotion order comparison
