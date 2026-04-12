@@ -3,6 +3,7 @@ SELECT
     customer_id,
     number_of_orders,
     customer_lifetime_value,
+    net_customer_lifetime_value,
     CASE 
         WHEN number_of_orders > 10 THEN 'Frequent Buyer'
         WHEN number_of_orders BETWEEN 5 AND 10 THEN 'Occasional Buyer'
@@ -12,5 +13,10 @@ SELECT
         WHEN customer_lifetime_value > 4000 THEN 'High Value'
         WHEN customer_lifetime_value BETWEEN 1500 AND 4000 THEN 'Medium Value'
         ELSE 'Low Value'
-    END AS value_segment
+    END AS value_segment,
+    CASE 
+        WHEN net_customer_lifetime_value > 4000 THEN 'High Value'
+        WHEN net_customer_lifetime_value BETWEEN 1500 AND 4000 THEN 'Medium Value'
+        ELSE 'Low Value'
+    END AS net_value_segment
 FROM {{ ref('customers') }}

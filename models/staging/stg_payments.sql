@@ -16,7 +16,8 @@ renamed as (
         payment_method,
 
         -- `amount` is currently stored in cents, so we convert it to dollars
-        amount / 100 as amount
+        amount / 100 as amount,
+        (payment_method = 'coupon')::int * (amount / 100) as coupon_amount
 
     from source
 
