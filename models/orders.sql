@@ -36,6 +36,7 @@ final as (
         orders.customer_id,
         orders.order_date,
         orders.status,
+        orders.is_closed,
 
         {% for payment_method in payment_methods -%}
 
@@ -50,7 +51,7 @@ final as (
 
     left join order_payments
         on orders.order_id = order_payments.order_id
-
+    where is_closed = true
 )
 
 select * from final
